@@ -1,0 +1,14 @@
+{
+    "python.pythonPath":"C:\\ProgramData\\WindowsApps\\PythonSoftwareFoundation.Python.3.9_3.9.752.0_x64_qbz5n2kfra8p0\\python3.9.exe" ,
+  
+    "python.linting.flake8Enabled": false,
+    "python.formatting.provider": "yapf",
+    "python.linting.flake8Args": ["--max-line-length=248"],
+<<<<<<< HEAD
+    "python.linting.pylintEnabled": false
+=======
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
+>>>>>>> e411d09e7107566bfcc535eb4bced3626aa98081
+    
+}
