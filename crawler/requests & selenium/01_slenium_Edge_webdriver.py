@@ -1,7 +1,11 @@
 # 自动打开edge浏览器并打开指定网页
+<<<<<<< HEAD
 from lib2to3.pgen2 import driver
 import time
 from xml.dom.minidom import Element
+=======
+import time
+>>>>>>> 5038e2cbc0c277214723426b91c1d04876aea656
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 

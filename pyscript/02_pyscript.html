@@ -1,0 +1,26 @@
+<html>
+    <head>
+      <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+      <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+      <py-env> <!-- 标签：这里声明要引入的包和要引入的文件-->
+          - numpy
+          - matplotlib
+          - /data.py
+      </py-env>
+    </head>
+
+    <body>
+        <h1>Let's plot random numbers</h1>
+        <div id="plot"></div>
+        <py-script output="plot"> <!--这里定义了要在 <div id="plot"></div>中输出的内容，可以看到这里的逻辑都是用python写的-->
+            import matplotlib.pyplot as plt
+            from data import make_x_and_y
+
+            x, y = make_x_and_y(n = 1000)
+
+            fig, ax = plt.subplots()
+            ax.scatter(x, y)
+            fig
+        </py-script>
+    </body>
+</html>
