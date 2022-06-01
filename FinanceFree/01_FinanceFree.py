@@ -13,6 +13,7 @@ df = pdr.get_data_yahoo(stock, start, now)
 print(df)
 lastGLV = []
 
+
 def GLV():
     dfmonth = df.groupby(pd.Grouper(freq='M'))['High'].max()
     # print(dfmonth)
@@ -25,19 +26,21 @@ def GLV():
         if value > currentGlV:
             currentGlV = value
             currentDate = index
-            counter=0
+            counter = 0
         if value < currentGlV:
             counter = counter + 1
-        
-            if counter==3 and ((index.month != now.month) or (index.year != now.year)):
+
+            if counter == 3 and ((index.month != now.month) or
+                                 (index.year != now.year)):
                 if currentGlV != lastGLV:
                     print(currentGlV)
-                glDate=currentDate
+                glDate = currentDate
                 # lastGLV=currentGlV
                 lastGLV.append(currentGlV)
 
         # print(str(lastGLV))
     print('压力值:', lastGLV)
+
 
 #  交易策略/买入卖出时机
 # percentchange = []
@@ -56,23 +59,23 @@ def BuySell():
         if (close > lastGLV[num] and pos == 0):
             bp = close
             pos = 1
-            numBuy +=1
+            numBuy += 1
             print('buying now at ' + str(bp) + str(i))
-        if close > 1.25*bp and pos == 1:
+        if close > 1.25 * bp and pos == 1:
             pos = 0
             sp = close
-            numSell +=1
-            pc = (sp/bp-1)*100         # profit 
+            numSell += 1
+            pc = (sp / bp - 1) * 100  # profit
             percentchange.append(pc)
             print('selling now at ' + str(sp) + str(i))
             if sp > lastGLV[num]:
                 num += 1
                 print("this Green Line doesn't make sense anymore")
-        elif close < 0.85*bp and pos ==1:
+        elif close < 0.85 * bp and pos == 1:
             pos = 0
             sp = close
-            numSell +=1
-            pc = (sp/bp-1)*100         # profit 
+            numSell += 1
+            pc = (sp / bp - 1) * 100  # profit
             percentchange.append(pc)
             print('selling now for safety' + str(sp) + str(i))
             if sp > lastGLV[num]:
@@ -81,32 +84,28 @@ def BuySell():
         else:
             pass
     gains = 0
-    ng = 0      # number of gains
+    ng = 0  # number of gains
     losses = 0
-    nl = 0      # number of losses
+    nl = 0  # number of losses
     totalr = 1  # total of returns / revenue
     print(numBuy, numSell)
 
-
     # calculate porflio percentchange
     for i in percentchange:
-        if(i>0):
+        if (i > 0):
             gains += i
             ng += 1
         else:
-            losses +=i
-            nl +=1
-        totalr = totalr*((i/100) +1)
+            losses += i
+            nl += 1
+        totalr = totalr * ((i / 100) + 1)
 
-    totalr = round((totalr-1)*100, 2)
+    totalr = round((totalr - 1) * 100, 2)
     print(totalr)
 
 
 GLV()
 BuySell()
-
-
-
 '''
     for i in df.index:
         close = df['close'][i]
