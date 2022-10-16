@@ -10,7 +10,9 @@ def func01():
 # func02 = func01
 # func02()
 
+
 def foo(func):
     func()
+
 
 foo(func01)
