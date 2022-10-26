@@ -64,8 +64,8 @@ def File_Save(filename):
                 this_week_csv = filepath_destination + '\\' + \
                     time.strftime('%Y%m%d %H:%M:%S', time.localtime(
                         get_week_begin(time.time(), 0)))[2:8] + '.csv'
-                with open(this_week_csv, 'a+') as new_file:
-                    pass
+                # with open(this_week_csv, 'a+') as new_file:
+                # pass
                 with open(this_week_csv, 'r+') as file_destination:
                     exist_data = file_destination.readlines()
                     if exist_data == []:
