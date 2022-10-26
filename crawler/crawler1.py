@@ -8,11 +8,11 @@ html = requests.get(url)
 if html.status_code == requests.codes.ok:
     pattern = input('please input pattern: ')
     result = re.findall(pattern, html.text)
-    if result != None:
+    if result is not None:
         print('%s occurs %d times' % (pattern, len(result)))
     else:
         print('Occurs 0 times' % pattern)
 else:
     print('failed')
 print(type(html))
-print(html.text)
+# print(html.text)
