@@ -16,4 +16,5 @@ def func_out(num1):
 # 调用闭包= 内部函数 num2 = 10
 # f(10)
 
+
 func_out(10)

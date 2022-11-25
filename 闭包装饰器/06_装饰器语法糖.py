@@ -7,11 +7,12 @@ def check(fn):
     return inner
 
 
-#2 使用装饰器装饰函数（增加一个登录功能）
+# 2 使用装饰器装饰函数（增加一个登录功能）
 # 解释器遇到@check 会立即执行 comment = check(comment)
 @check
 # 需要被装饰的函数
 def comment():
     print('发表评论')
+
 
 comment()
