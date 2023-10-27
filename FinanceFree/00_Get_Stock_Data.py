@@ -1,4 +1,4 @@
-# get stock history price 
+# get stock history price
 # store as file
 # Draw the K picture
 import matplotlib
@@ -13,13 +13,13 @@ import matplotlib.pyplot as plt
 import mplfinance as mpf
 
 
-# yf.pdr_override()       # 
+# yf.pdr_override()       #
 
 start = dt.datetime(1980, 12, 1)
 now = dt.datetime.now()
 
-stock=input('Input the stock symbol:   ')
-df = ts.get_hist_data(stock, start= str(start), end = str(now))
+stock = input('Input the stock symbol:   ')
+df = ts.get_hist_data(stock, start=str(start), end=str(now))
 # print(df)
 
 df2 = df['close']

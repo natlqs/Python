@@ -5,9 +5,15 @@ def logging(fn):
         return result
 
     return inner
-@logging
-def sum_num(a,b):
+
+
+@logging    # @logging ==>    sum_num(a, b) = logging(sum_num(a, b))
+def sum_num(a, b):
     result = a + b
+    # print(result)
     return result
+
+
 result = sum_num(1, 2)
+# sum_num(2, 3)
 print(result)

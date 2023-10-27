@@ -6,6 +6,7 @@ def config_name(name):
 
     return say_info
 
+
 tom = config_name("tom")
 tom("nihao")
 tom("你在吗")
