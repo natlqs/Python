@@ -13,6 +13,7 @@ SQLite和Python建立连接
 关闭cursor和connection连接
 '''
 import sqlite3
+import numpy
 
 
 def writeTofile(data, filename):
