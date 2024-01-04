@@ -20,7 +20,7 @@ def db(page):
        print(score[i])
        print(img[i])
        res = requests.get(img[i])  # 开始下载图片
-       file = open('.\\Python\\crawler\\requests & selenium\\images\\'+ str(num+i) + ' ' + score[i] + title[i] + '.jpg', 'wb')
+       file = open('D:\\Crawler Result\\Douban Movie\\'+ str(num+i) + ' ' + score[i] + title[i] + '.jpg', 'wb')
        file.write(res.content)
        file.close()
 
