@@ -15,4 +15,4 @@ def _():
    ui.label(str(r_num.value))
 
 # 运行应用程序
-ui_run()
+ui.run()

@@ -1,0 +1,2 @@
+pip install nicegui -U
+nicegui-1.2.24
