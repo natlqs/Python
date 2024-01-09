@@ -34,7 +34,7 @@ def bind_click_ref(chart_level1: rxui.echarts):
 # 定义重置当前工作表的方法
 @on(r_current_file)
 def reset_current_sheet():
-   r_current_file.value = ""
+   r_current_sheet.value = ""
 
 # 定义重置所有选择器值的方法
 @on(r_current_sheet)

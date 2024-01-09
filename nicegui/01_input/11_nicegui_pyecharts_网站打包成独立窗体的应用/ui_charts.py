@@ -46,9 +46,9 @@ def build():
                     "https://echarts.apache.org/examples/zh/editor.html?c=pie-custom",
                     new_tab=True,
                 )
-            pie = rxui.echarts(viewData.level1_chart_data).classes(
-                "h-[50vh] w-full"
-            )
+                pie = rxui.echarts(viewData.level1_chart_data).classes(
+                    "h-[50vh] w-full"
+                )
 
             viewData.bind_click_ref(pie)
         
@@ -62,6 +62,6 @@ def build():
                 @effect_refreshable
                 def _():
                     if viewData.can_level2_chart_show.value:
-                        rxui.echarts(viewData.level2_chart_data).classes(
+                        rxui.echarts.from_pyecharts(viewData.level2_chart_data).classes(
                             "h-[50vh] w-full"
                         )
