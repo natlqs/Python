@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "myapp",
+    # 或 ‘myapp.apps.MyappConfig’, 但如果有多个app，则需要逐一添加
+
 ]
 
 MIDDLEWARE = [
@@ -110,7 +113,7 @@ TIME_ZONE = "UTC"
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False      # 时区问题，设置为False，不使用时区
 
 
 # Static files (CSS, JavaScript, Images)
