@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+        <h1>用户信息管理</h1>
+        <a href="{% url 'indexusers' %}">浏览信息</a>
+        <a href="{% url 'addusers' %}">添加信息</a>
+
+        <h3>浏览用户信息</h3>
+        <table width="800" border="1">
+            <tr>
+                <th>ID号</th>
+                <th>姓名</th>
+                <th>年龄</th>
+                <th>电话</th>
+                <th>添加时间</th>
+                <th>操作</th>
+            </tr>
+            {% for user in userslist %}
+                <tr>
+                    <td>{{user.id}}</td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.age}}</td>
+                    <td>{{user.phone}}</td>
+                    <td>{{user.addtime}}</td>
+                    <td>编辑 删除</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </center>
+    
+</body>
+</html>

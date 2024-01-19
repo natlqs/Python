@@ -6,7 +6,7 @@ from myapp.models import Users
 
 # Create your views here.
 def home(request):
-    return HttpResponse("Hello, World!")
+    return HttpResponse("Hello, World! <br/> <a href='/users'>用户信息管理</a>")
 def add(request):
     return HttpResponse("adding...")
 def find(request, id=0,name=''):
@@ -106,24 +106,31 @@ def databases(request):
 
 # 浏览用户信息
 def indexUsers(request):
-    pass
+    try:
+        ulist = Users.objects.all()
+        context = {"userslist":ulist}
+        return render(request, 'myapp/users/index.html',context)    # 加载模板
+
+    except:
+        return HttpResponse("没有找到用户信息！")
+
 
 # 加载添加用户信息表单
 def addUsers(request):
-    pass
+    return render(request, "myapp/users/add.html")
 
 # 执行用户信息添加
-def addUsers(request):
+def insertUsers(request):
     pass
 
 # 执行用户信息删除
-def addUsers(request):
+def delUsers(request, uid=0):
     pass
 
 # 加载用户信息修改表单
-def addUsers(request):
+def editUsers(request, uid=0):
     pass
 
 # 执行用户信息修改
-def addUsers(request):
+def updateUsers(request):
     pass

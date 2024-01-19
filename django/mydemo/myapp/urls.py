@@ -18,6 +18,10 @@ urlpatterns = [
 
 
     # 模型层测试， 配置Users操作数据路由
-
-    path("")
+    path("users", views.indexUsers, name="indexusers"),
+    path("users/add", views.addUsers, name="addusers"),
+    path("users/insert", views.insertUsers, name="insertusers"),
+    path("users/delete", views.delUsers, name="deleteusers"),
+    path("users/edit", views.editUsers, name="editusers"),
+    path("users/update", views.updateUsers, name="updateusers"),
 ]
