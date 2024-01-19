@@ -15,4 +15,9 @@ urlpatterns = [
 
     # 正则表达式匹配
     re_path(r'^fun/(?P<year>[0-9]{4})/(?P<month>[0-9]{2})/$', views.fun),  # 带两个参数   id,name
+
+
+    # 模型层测试， 配置Users操作数据路由
+
+    path("")
 ]
