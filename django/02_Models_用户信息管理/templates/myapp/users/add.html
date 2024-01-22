@@ -7,10 +7,7 @@
 </head>
 <body>
     <center>
-        <h1>用户信息管理</h1>
-        <a href="{% url 'indexusers' %}">浏览信息</a>
-        <a href="{% url 'addusers' %}">添加信息</a>
-
+        {% include "myapp/users/menu.html" %}       <!-- 用页面拆分的方法，引入菜单栏 -->
         <h3>添加用户信息</h3>
         <form action="{% url 'insertusers' %}" method="post">
             {% csrf_token %}    <!-- 防止跨站请求伪造，生成令牌 -->
