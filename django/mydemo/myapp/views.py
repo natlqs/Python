@@ -110,7 +110,6 @@ def indexUsers(request):
         ulist = Users.objects.all()
         context = {"userslist":ulist}
         return render(request, 'myapp/users/index.html',context)    # 加载模板
-
     except:
         return HttpResponse("没有找到用户信息！")
 
@@ -121,16 +120,57 @@ def addUsers(request):
 
 # 执行用户信息添加
 def insertUsers(request):
-    pass
+    try:
+        ob = Users()
+        # 从表单中获取要添加的信息，并封装到ob对象中
+        ob.name = request.POST['name']
+        ob.age = request.POST['age']
+        ob.phone = request.POST['phone']
+        ob.save()   # 执行保存
+        context={"info": "添加成功!"}
+    except:
+        context={"info": "添加失败!"}
+
+    return render(request, "myapp/users/info.html", context)
+
+    
 
 # 执行用户信息删除
-def delUsers(request, uid=0):
+def delUsers(request, uid=0 ):
+    try:
+        ob = Users.objects.get(id=uid)        # 获取要删除的数据
+        ob.delete()     # 执行删除操作
+        context={"info": "删除成功!"}
+    except:
+        context={"info": "删除失败!"}
+
+    return render(request, "myapp/users/info.html", context)
+
+ 
     pass
 
 # 加载用户信息修改表单
 def editUsers(request, uid=0):
-    pass
+    try:
+        ob=Users.objects.get(id=uid)    #获取要修改的数据
+        context = {'user':ob}
+        return render(request, 'myapp/users/edit.html', context)
+    except:
+        context = {"info": "没有找到要修改的数据"}
+        return render(request, "myapp/users/info.html", context)
 
 # 执行用户信息修改
 def updateUsers(request):
-    pass
+    try:
+        uid= request.POST['id']     # 获取要修改数据的id号
+        ob = Users.objects.get(id=uid)  # 查询要修改的数据
+        # 从表单中获取要添加的信息，并封装到ob对象中
+        ob.name = request.POST['name']
+        ob.age = request.POST['age']
+        ob.phone = request.POST['phone']
+        ob.save()   # 执行保存
+        context={"info": "修改成功!"}
+    except:
+        context={"info": "修改失败!"}
+
+    return render(request, "myapp/users/info.html", context)

@@ -7,29 +7,28 @@
 </head>
 <body>
     <center>
-        <h1>用户信息管理</h1>
-        <a href="{% url 'indexusers' %}">浏览信息</a>
-        <a href="{% url 'addusers' %}">添加信息</a>
+        {% include "myapp/users/menu.html" %}       <!-- 用页面拆分的方法，引入菜单栏 -->
 
-        <h3>添加用户信息</h3>
-        <form action="{% url 'insertusers' %}" method="post">
+        <h3>编辑用户信息</h3>
+        <form action="{% url 'updateusers' %}" method="post">
             {% csrf_token %}    <!-- 防止跨站请求伪造，生成令牌 -->
+            <input type="hidden" name="id" value="{{user.id}}">
             <table width="280" border="0">
                 <tr>
                     <td>姓名：</td>
-                    <td><input type="text" name="name"/></td>
+                    <td><input type="text" name="name" value="{{user.name}}"/></td>
                 </tr>
                 <tr>
                     <td>年龄：</td>
-                    <td><input type="text" name="age"/></td>
+                    <td><input type="text" name="age" value="{{user.age}}"/></td>
                 </tr>
                 <tr>
                     <td>电话：</td>
-                    <td><input type="text" name="phone"/></td>
+                    <td><input type="text" name="phone" value="{{user.phone}}"/></td>
                 </tr>
                 <tr>
                     <td colspan="2" align="center">
-                        <input type="submit" value="添加">
+                        <input type="submit" value="修改">
                         <input type="reset" value="重置">
                     </td>
                 </tr>

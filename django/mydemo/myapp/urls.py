@@ -21,7 +21,7 @@ urlpatterns = [
     path("users", views.indexUsers, name="indexusers"),
     path("users/add", views.addUsers, name="addusers"),
     path("users/insert", views.insertUsers, name="insertusers"),
-    path("users/delete", views.delUsers, name="deleteusers"),
-    path("users/edit", views.editUsers, name="editusers"),
+    path("users/delete/<int:uid>", views.delUsers, name="deleteusers"),
+    path("users/edit/<int:uid>", views.editUsers, name="editusers"),
     path("users/update", views.updateUsers, name="updateusers"),
 ]
