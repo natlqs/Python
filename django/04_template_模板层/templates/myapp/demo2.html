@@ -1,0 +1,12 @@
+{% extends 'myapp/base.html' %}
+{% block content %}
+<h1>This is demo2.html</h1>
+{% endblock %}
+
+{% block mycontent %}
+模板继承可以减少页面内容的重复定义，实现页面内容的重用<br>
+典型应用：网站的头部、尾部都是一样的，这些内容可以定义在父模板中，字模板不需要重复定义<br>
+block标签：在父模板中预留区域，在字模板中填充<br>
+extends继承：继承，先在模板文件的第一行<br>
+定义父模板base.html  <br>
+{% endblock %}
