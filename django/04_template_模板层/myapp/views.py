@@ -36,12 +36,10 @@ def showcity(request):
 
 # 加载对应的城市信息函数，返回json数据格式
 def cities(request, upid=0):
-    # # citylist = Cities.objects.filter(provinceCode=upid)
-    # print(citylist)
-    citylist = Cities.objects.all()
-    print(citylist)
+    citylist = Cities.objects.filter(provinceCode=upid)
     citieslist = []
     for ob in citylist:
-        citieslist.append({'code':ob.code, 'name':ob.name, 'provinceCode':ob.provinceCode})
-        print(ob.name, ob.code, ob.provinceCode)
-    return JsonResponse({'data':citieslist})
+        citieslist.append({"code":ob.code, "name":ob.name, "provinceCode":ob.provinceCode})
+    return JsonResponse({"data":citieslist})
+  
+
