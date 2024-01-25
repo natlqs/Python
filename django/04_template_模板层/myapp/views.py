@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse, Http404
 from datetime import datetime
+from myapp.models import Cities
 
 # Create your views here.
 def index(request):
@@ -28,3 +29,19 @@ def demo1(request):
 def demo2(request):
     '''模板继承'''
     return render(request, 'myapp/demo2.html')
+
+# 加载城市级联信息操作模板
+def showcity(request):
+    return render(request, "myapp/city.html")
+
+# 加载对应的城市信息函数，返回json数据格式
+def cities(request, upid=0):
+    # # citylist = Cities.objects.filter(provinceCode=upid)
+    # print(citylist)
+    citylist = Cities.objects.all()
+    print(citylist)
+    citieslist = []
+    for ob in citylist:
+        citieslist.append({'code':ob.code, 'name':ob.name, 'provinceCode':ob.provinceCode})
+        print(ob.name, ob.code, ob.provinceCode)
+    return JsonResponse({'data':citieslist})
