@@ -4,8 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajax实战--城市信息级联操作</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        //jquery入口程序
+        $(function(){
+            // alert("OK");     //测试
+
+            // // 打开网页后，后台使用Jquery的Ajax请求加载城市信息
+            // $.ajax({
+            //     type:'get',  //请求方式
+            //     url:"{% url 'cities' 14 %}",     //请求地址
+            //     dataType:'json',  //返回数据类型'
+            //     async:false,  //异步请求
+            //     success:function(res){      // 请求成功后返回（响应）的回调函数
+            //         alert(res['data'][0]['name'])
+            //     }
+            // });
+
+            // 点击省份选择框，动态加载城市信息
+            $.ajax({
+                type:'get',  //请求方式
+                url:"{% url 'cities' 14 %}",     //请求地址
+                dataType:'json',  //返回数据类型'
+                async:false,  //异步请求
+                success:function(res){      // 请求成功后返回（响应）的回调函数
+                    list=res.data;
+                    //遍历响应的城市信息
+                    for(var i=0;i<list.length;i++){
+                        //动态生成省份选项
+                        $('#cid').append('<option value="'+list[i]['code']+'">'+list[i]['name']+'</option>')
+                    }
+                },
+            })
+        });
+
+        // 获取最后一个下拉框并添加选中的事件
+        $("select").live('change', function(){
+            // 选中的code
+            var code= $(this).val();
+            $(this).nextAll().remove();  //删除后面的下拉框
+            // 异步请求获取下一级城市信息
+            $.ajax({
+                url:"/cities/" + code,     //请求地址
+                type:'get',  //请求方式
+                data:{},
+                dataType:'json',  //返回数据类型'
+                async:false,  //异步请求
+                success:function(res){      // 请求成功后返回（响应）的回调函数
+                    if(res.data.length<1)
+                        return;
+                    var data = res.data
+                    var select = $("<select></select>")
+                    for (var i=0;i<data.length;i++){
+                        $('<option value="'+data[i]['code']+'">'+data[i]['name']+'</option>')
+                    }
+                    $("select:last").after(select)
+                },
+            })
+        })
+    </script>
 </head>
 <body>
     <h2>Ajax实战--城市信息级联操作</h2>
+    <select id="cid">
+        <option value="">请选择省份</option>></option>
+    </select>
 </body>
 </html>
