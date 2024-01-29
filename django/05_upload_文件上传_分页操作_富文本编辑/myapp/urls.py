@@ -17,6 +17,11 @@ urlpatterns = [
     # 正则表达式匹配
     re_path(r'^fun/(?P<year>[0-9]{4})/(?P<month>[0-9]{2})/$', views.fun),  # 带两个参数   id,name
 
+    # 文件上传路由配置
+    path("upload", views.upload, name='upload'),    # 加载文件上传表单页
+    path("doupload", views.doupload, name='doupload'),  # 执行文件上传处理
+
+
 
     # 模型层测试， 配置Users操作数据路由
     path("users", views.indexUsers, name="indexusers"),

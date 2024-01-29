@@ -3,10 +3,13 @@ from django.http import HttpResponse
 from django.urls import reverse
 from django.shortcuts import redirect
 from myapp.models import Users
+import time
+from PIL import Image
 
 # Create your views here.
 def home(request):
-    return HttpResponse("Hello, World! <br/> <a href='/users'>用户信息管理</a>")
+    # return HttpResponse("Hello, World! <br/> <a href='/users'>用户信息管理</a>")
+    return render(request, "myapp/index.html")
 def add(request):
     return HttpResponse("adding...")
 def find(request, id=0,name=''):
@@ -32,6 +35,36 @@ def fun(request, year, month):
 def error_404(request, exception):
     return render(request, '404.html', status=404)
 
+# 加载文件上传表单
+def upload(request):
+    return render(request, "myapp/upload.html")
+
+# 执行文件上传处理
+def doupload(request):
+    myfile = request.FILES.get("pic", None)
+    if not myfile:
+        return HttpResponse("没有上传的文件信息")
+
+    # 生成上传后的文件名
+    filename = str(time.time())+"." + myfile.name.split('.').pop()
+
+    # 接收到的文件分段保存
+    destination=open("./static/pics/"+filename, 'wb+')
+    for chunk in myfile.chunks():       # 分块读取上传文件内容并写入目标文件
+        destination.write(chunk)
+    destination.close()
+
+    # 执行图片缩放
+    im = Image.open("./static/pics/" + filename)
+    # 缩放到75*75（缩放后的宽高比例不变):
+    im.thumbnail((75, 75))
+
+    # 把缩放后的图片用jpeg格式保存
+    im.save("./static/pics/s_" + filename, None)
+
+    # print(myfile)
+    # print(request.POST.get("title"))
+    return HttpResponse("上传的文件信息： "+ filename)
 
 # 数据库操作 测试
 def databases(request):
@@ -109,7 +142,7 @@ def indexUsers(request):
     try:
         ulist = Users.objects.all()
         context = {"userslist":ulist}
-        return render(request, 'myapp/users/index.html',context)    # 加载模板
+        return render(request, 'myapp/users/indexusers.html',context)    # 加载模板
     except:
         return HttpResponse("没有找到用户信息！")
 
@@ -147,7 +180,6 @@ def delUsers(request, uid=0 ):
     return render(request, "myapp/users/info.html", context)
 
  
-    pass
 
 # 加载用户信息修改表单
 def editUsers(request, uid=0):
