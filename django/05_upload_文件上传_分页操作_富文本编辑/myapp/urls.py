@@ -21,6 +21,8 @@ urlpatterns = [
     path("upload", views.upload, name='upload'),    # 加载文件上传表单页
     path("doupload", views.doupload, name='doupload'),  # 执行文件上传处理
 
+    # 分页浏览用户信息
+    path("pageusers/<int:pIndex>", views.pageUsers, name='pageusers'),   # 分页浏览用户信息
 
 
     # 模型层测试， 配置Users操作数据路由

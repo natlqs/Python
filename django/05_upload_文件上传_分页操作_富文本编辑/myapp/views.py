@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.urls import reverse
 from django.shortcuts import redirect
@@ -146,6 +147,28 @@ def indexUsers(request):
     except:
         return HttpResponse("没有找到用户信息！")
 
+# 分页浏览用户信息
+def pageUsers(request, pIndex =1):
+    try:
+        # 判断搜索条件并封装
+        kw = request.GET.get("keyword", None)
+        mywhere = ""    # 定义一个用于存储搜索条件的变量
+        if kw is not None:
+            ulist = Users.objects.filter(name__contains=kw)     # 对name字段做包含式查询
+            mywhere = "?keyword=%s"%(kw)    # 追加搜索条件
+        else:
+            ulist = Users.objects.filter()
+        p = Paginator(ulist, 5)         # 以5条数据一页实例化对象
+        # 判断页码值是否有效，防止越界
+        if pIndex<1:
+            pIndex=1
+        if pIndex>p.num_pages:      # 如果给的页码超过页码总数，将最后一页给pIndex
+            pIndex=p.num_pages
+        plist = p.page(pIndex)
+        context = {"userslist":plist, "pIndex":pIndex, "pagelist":p.page_range, "mywhere":mywhere}
+        return render(request, 'myapp/users/indexusers2.html',context)    # 加载模板
+    except:
+        return HttpResponse("没有找到用户信息！")
 
 # 加载添加用户信息表单
 def addUsers(request):
