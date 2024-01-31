@@ -21,7 +21,7 @@ class ShopMiddleware(object):
         urllist = ['/myadmin/login','/myadmin/dologin','/myadmin/logout','/myadmin/verify']
         # 判断当前请求是否是访问网站后台,并且path不在urllist中
         if re.match(r"^/myadmin",path) and (path not in urllist):
-            # 判断当前用户是否没有登录
+            # 判断当前用户是否没有登录(在session中没有adminuser)
             if "adminuser" not in request.session:
                 # 执行登录界面跳转
                 return redirect(reverse('myadmin_login'))
