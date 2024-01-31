@@ -150,7 +150,7 @@
               <!-- The user image in the navbar-->
               <img src="{% static 'myadmin/dist/img/user2-160x160.jpg'%}" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">{{request.session.adminuser.nickname}}</span>
+              <span class="hidden-xs">张无忌</span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
@@ -158,8 +158,8 @@
                 <img src="{% static 'myadmin/dist/img/user2-160x160.jpg'%}" class="img-circle" alt="User Image">
 
                 <p>
-                  张无忌 - 管理员
-                  <small>2020年07月16日加入</small>
+                  {{request.session.adminuser.nickname}} - 管理员
+                  <small>{{ request.session.adminuser.create_at }}加入</small>
                 </p>
               </li>
               <!-- Menu Footer-->
@@ -173,7 +173,7 @@
               </li>
             </ul>
           </li>
-
+          
         </ul>
       </div>
     </nav>
@@ -201,9 +201,9 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">主要导航</li>
         <!-- 导航列表，你可以自行更改图标 -->
-        <li class="active"><a href="admin.html"><i class="fa fa-home"></i> <span>首页</span></a></li>
-
-        <li><a href="member.html"><i class="fa fa-users"></i> <span>会员管理</span></a></li>
+        <li class="active"><a href="{% url 'myadmin_index' %}"><i class="fa fa-home"></i> <span>首页</span></a></li>
+        
+        <li><a href="{% url 'myadmin_user_index' 1 %}"><i class="fa fa-users"></i> <span>员工管理</span></a></li>
         <li><a href="shop.html"><i class="fa fa-sitemap"></i> <span>店铺管理</span></a></li>
         <li class="treeview">
           <a href="category.html"><i class="fa fa-cutlery"></i> <span>菜品管理</span>
@@ -217,7 +217,7 @@
           </ul>
         </li>
         <li><a href="orders.html"><i class="fa fa-shopping-cart"></i> <span>订单管理</span></a></li>
-        <li><a href="#"><i class="fa fa-user"></i> <span>账号管理</span></a></li>
+        <li><a href="#"><i class="fa fa-user"></i> <span>会员管理</span></a></li>
         <li><a href="#"><i class="fa fa-key"></i> <span>权限管理</span></a></li>
         <li><a href="#"><i class="fa fa-gear"></i> <span>系统配置</span></a></li>
         <li><a href="#"><i class="fa fa-unlock-alt"></i> <span>认证体系</span></a></li>
@@ -229,8 +229,8 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    {% block main_body %}
-    {% endblock %}
+     {% block main_body %}
+     {% endblock %}
   </div>
   <!-- /.content-wrapper -->
 
@@ -241,7 +241,7 @@
       <!--餐饮管理平台-->
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2020 <a href="#">北京*******有限公司</a>.</strong> 版权所有
+    <strong>Copyright &copy; 2020 <a href="#">北京有限公司</a>.</strong> 版权所有
   </footer>
 
   <!-- 添加侧栏的背景。必须放置此处紧接在控制侧边栏之后 -->
@@ -270,7 +270,7 @@
 <!-- edu-model-end -->
 
 <!-- REQUIRED JS SCRIPTS -->
-
+  
 <!-- jQuery 3 -->
 <script src="{% static 'myadmin/bower_components/jquery/dist/jquery.min.js'%}"></script>
 <!-- Bootstrap 3.3.7 -->
@@ -283,31 +283,19 @@
 <!-- 此处可以添加SimLoopl和FastClick插件，用于增强用户体验。 -->
 
 <script type="text/javascript">
-  //自定义一个用于实现Ajax信息删除的函数
-  function doDelete(del_url){
+	function doDel(url){
     Modal.confirm({
-      msg: "确定要删除吗？",
-      title: ' 信息提示',
-      btnok: '确定',
-      btncl:'取消'
-    }).on(function (e){
-      if(e){ //判断是否点击了确定按钮
-        $.ajax({
-          type:'get',
-          url:del_url,
-          dataType:'json',
-          async: false,
-          success:function(res){
-            Modal.alert({msg:res.info, title:' 信息提示',btnok: '确定',btncl:'取消'});
-            window.location.reload(); //刷新当前页面.
-          },
-        });
-      }
-    });
-  }
+        msg: "确定要删除吗？",
+        title: ' 信息提示',
+        btnok: '确定',
+        btncl:'取消'
+      }).on(function (e){
+        if(e){
+          window.location.href=url;
+          //Modal.alert({msg: "成功删除",title: ' 信息提示',btnok: '确定',btncl:'取消'});
+        }
+      });
+  }  
 </script>
-{% block loadjavascript %}
-<!-- 此处可加载独立的javascript程序 -->
-{% endblock %}
 </body>
 </html>
