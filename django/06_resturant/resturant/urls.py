@@ -22,5 +22,5 @@ urlpatterns = [
     path("", include("web.urls")),
     path("myadmin/", include("myadmin.urls")),
     path("mobile/", include("mobile.urls")),
-    path("web/", include("web.urls")),
+    # path("web/", include("web.urls")),
 ]
