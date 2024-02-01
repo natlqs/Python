@@ -84,8 +84,8 @@ def delete(request,uid):
         print(err)
         context={"info":"删除失败"}
 
-    return JsonResponse(context)
-    #return render(request,"myadmin/info.html",context)
+    # return JsonResponse(context)
+    return render(request,"myadmin/info.html",context)
 
 
 def edit(request,uid):

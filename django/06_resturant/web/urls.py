@@ -4,5 +4,5 @@ from web.views import index
 
 urlpatterns = [
     #
-    path('', index.index, name='index')
+    path('', index.index, name='web_index')
 ]
