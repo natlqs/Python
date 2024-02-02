@@ -1,7 +1,7 @@
 #前台大堂点餐端子路由文件
 from django.urls import path,include
 
-from web.views import index
+from web.views import index, cart, orders
 
 urlpatterns = [
     path('', index.index, name="index"),
@@ -15,5 +15,13 @@ urlpatterns = [
     #为url路由添加请求前缀web/,凡是带此前缀的url地址必须登录后才可访问
     path("web/",include([
         path('', index.webindex, name="web_index"), #前台大堂点餐首页
+        #购物车信息管理路由
+        path('cart/add/<str:pid>', cart.add, name="web_cart_add"), #购物车添加
+        path('cart/delete/<str:pid>', cart.delete, name="web_cart_delete"), #购物车删除
+        path('cart/clear', cart.clear, name="web_cart_clear"), #购物车清空
+        path('cart/change', cart.change, name="web_cart_change"), #购物车更改
+
+        #订单处理路由
+        path('orders/insert', orders.insert, name="web_orders_insert"), #执行订单添加
     ]))
 ]
