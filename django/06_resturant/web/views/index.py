@@ -48,13 +48,15 @@ def dologin(request):
             if user.password_hash == md5.hexdigest(): #获取md5值
                 print('登录成功')
                 #将当前登录成功的用户信息以webuser为key写入到session中
-                print(user)
+                print(len(user.toDict()))
                 request.session['webuser'] = user.toDict()
                 print('添加session成功')
                 #获取当前店铺信息
                 shopob = Shop.objects.get(id=request.POST['shop_id'])
                 print('获取shop成功')
-                print(shopob)
+                print(shopob.toDict())
+                for i in shopob.toDict():
+                    print(i)
                 request.session['shopinfo'] = shopob.toDict()
                 print('添加shoplist到session成功')
                 #获取当前店铺中所有的菜品类别和菜品信息
