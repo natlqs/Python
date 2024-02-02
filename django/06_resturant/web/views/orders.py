@@ -1,15 +1,47 @@
 #订单信息管理视图文件
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.core.paginator import Paginator
 from django.shortcuts import redirect
 from django.urls import reverse
 from datetime import datetime
 
-from myadmin.models import Orders,OrderDetail,Payment
+from myadmin.models import User,Orders,OrderDetail,Payment
 
 def index(request,pIndex=1):
     ''' 浏览订单信息 '''
-    pass
+    umod = Orders.objects
+    sid = request.session['shopinfo']['id'] #获取当前店铺id号
+    ulist = umod.filter(shop_id=sid)
+    mywhere=[]
+     # 获取、判断并封装状态status搜索条件
+    status = request.GET.get('status','')
+    if status != '':
+        ulist = ulist.filter(status=status)
+        mywhere.append("status="+status)
+        
+    ulist = ulist.order_by("id")#对id排序
+    #执行分页处理
+    pIndex = int(pIndex)
+    page = Paginator(ulist,10) #以每页10条数据分页
+    maxpages = page.num_pages #获取最大页数
+    #判断当前页是否越界
+    if pIndex > maxpages:
+        pIndex = maxpages
+    if pIndex < 1:
+        pIndex = 1
+    list2 = page.page(pIndex) #获取当前页数据
+    plist = page.page_range #获取页码列表信息
+
+    for vo in list2:
+        if vo.user_id == 0:
+            vo.nickname = "无"
+        else:
+            user = User.objects.only("nickname").get(id=vo.user_id)
+            vo.nickname = user.nickname
+
+    context = {"orderslist":list2,'plist':plist,'pIndex':pIndex,'maxpages':maxpages,'mywhere':mywhere}
+    return render(request,"web/list.html",context)
 
 def insert(request):
     ''' 执行订单添加 '''
@@ -60,8 +92,22 @@ def insert(request):
 
 def detail(request):
     ''' 加载订单详情 '''
-    pass
+    print('1')
+    oid = request.GET.get("oid",0)
+    dlist = OrderDetail.objects.filter(order_id=oid)
+    # dlist = Orders.objects.filter(id=oid)
+    print(dlist)
+    context = {"detaillist":dlist}
+    return render(request,"web/detail.html",context)
 
 def status(request):
     ''' 修改订单状态 '''
-    pass
+    try:
+        oid = request.GET.get("oid",0)
+        ob = Orders.objects.get(id=oid)
+        ob.status = request.GET['status']
+        ob.save()
+        return HttpResponse("Y")
+    except Exception as err:
+        print(err)
+        return HttpResponse("N")

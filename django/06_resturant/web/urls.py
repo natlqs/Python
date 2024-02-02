@@ -22,6 +22,9 @@ urlpatterns = [
         path('cart/change', cart.change, name="web_cart_change"), #购物车更改
 
         #订单处理路由
+        path('orders/<int:pIndex>', orders.index, name="web_orders_index"), #订单浏览
         path('orders/insert', orders.insert, name="web_orders_insert"), #执行订单添加
+        path('orders/detail', orders.detail, name="web_orders_detail"), #订单详情
+        path('orders/status', orders.status, name="web_orders_status"), #修改订单状态
     ]))
 ]
