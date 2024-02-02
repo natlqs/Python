@@ -137,13 +137,18 @@ def update(request,pid):
           destination.close()
 
         ob = Product.objects.get(id=pid)
+        print("3")
         ob.shop_id = request.POST['shop_id']
         ob.category_id = request.POST['category_id']
         ob.name = request.POST['name']
         ob.price = request.POST['price']
+        print("5")
         ob.cover_pic = cover_pic
+        print("4")
         ob.status = request.POST['status']
+        print("0")
         ob.update_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print("1")
         ob.save()
         context={"info":"修改成功！"}
         # 判断删除老图片

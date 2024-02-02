@@ -34,37 +34,26 @@ def dologin(request):
         
         #根据登录账号获取登录者信息
         user = User.objects.get(username=request.POST['username'])
-        print(user)
         #判断当前用户是否正常或管理员
         if user.status == 6 or user.status == 1:
-            print("true")
             #判断登录密码是否相同
             import hashlib
             md5 = hashlib.md5()
             s = request.POST['pass']+user.password_salt #从表单中获取密码并添加干扰值
             md5.update(s.encode('utf-8')) #将要产生md5的子串放进去
-            print(s)
-            print(md5.hexdigest())
             if user.password_hash == md5.hexdigest(): #获取md5值
                 print('登录成功')
                 #将当前登录成功的用户信息以webuser为key写入到session中
-                print(len(user.toDict()))
                 request.session['webuser'] = user.toDict()
-                print('添加session成功')
                 #获取当前店铺信息
                 shopob = Shop.objects.get(id=request.POST['shop_id'])
-                print('获取shop成功')
-                print(shopob.toDict())
-                for i in shopob.toDict():
-                    print(i)
                 request.session['shopinfo'] = shopob.toDict()
-                print('添加shoplist到session成功')
                 #获取当前店铺中所有的菜品类别和菜品信息
                 clist = Category.objects.filter(shop_id = shopob.id,status=1)
+                print(clist)
                 categorylist = dict() #菜品类别（内含有菜品信息）
                 productlist = dict() #菜品信息
                 #遍历菜品类别信息
-                print('准备遍历菜品类别信息')
                 for vo in clist:
                     c = {'id':vo.id,'name':vo.name,'pids':[]}
                     plist = Product.objects.filter(category_id=vo.id,status=1)
@@ -73,10 +62,11 @@ def dologin(request):
                         c['pids'].append(p.toDict())
                         productlist[p.id]=p.toDict()
                     categorylist[vo.id] = c   
+                print(categorylist)
+                print(productlist)
                 #将上面的结果存入到session中
                 request.session['categorylist'] = categorylist
                 request.session['productlist'] = productlist
-                print('准备重定向到首页')
                 
                 #重定向到前台大堂点餐首页
                 return redirect(reverse("web_index"))
